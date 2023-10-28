@@ -26,13 +26,23 @@ public class AccountOperationsTest extends AccountIntegrationServiceTest {
 
     @Given("^Account with a balance of (\\d+)$")
     public void account_with_a_balance_of(int balance)  {
-        account = createAccount(Double.valueOf(balance));
+        account = createAccount((double) balance);
+    }
+
+    @Given("^Account with a balance of (\\d+) and promo applied$")
+    public void account_with_a_balance_of_and_promo_applied(int balance)  {
+        account = createAccountPromo((double) balance, true);
+    }
+
+    @Given("^Account with a balance of (\\d+) and no promo applied$")
+    public void account_with_a_balance_of_and_no_promo_applied(int balance)  {
+        account = createAccountPromo((double) balance, false);
     }
 
     @When("^Trying to withdraw (\\d+)$")
     public void trying_to_withdraw(int sum) {
         try {
-            account = withdraw(account, Double.valueOf(sum));
+            account = withdraw(account, (double) sum);
         } catch (InsufficientFundsException ife) {
             this.ife = ife;
         }
@@ -41,7 +51,7 @@ public class AccountOperationsTest extends AccountIntegrationServiceTest {
     @When("^Trying to deposit (.*)$")
     public void trying_to_deposit(int sum) {
         try {
-            account = deposit(account, Double.valueOf(sum));
+            account = deposit(account, (double) sum);
         } catch (DepositNegativeSumException dnse) {
             this.dnse = dnse;
         }

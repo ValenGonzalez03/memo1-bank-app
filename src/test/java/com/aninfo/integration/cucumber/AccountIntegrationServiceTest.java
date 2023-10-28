@@ -18,6 +18,10 @@ public class AccountIntegrationServiceTest {
         return accountService.createAccount(new Account(balance));
     }
 
+    Account createAccountPromo(Double balance, boolean promoHasApplied) {
+        return accountService.createAccount(new Account(balance, promoHasApplied));
+    }
+
     Account withdraw(Account account, Double sum) {
         return accountService.withdraw(account.getCbu(), sum);
     }
